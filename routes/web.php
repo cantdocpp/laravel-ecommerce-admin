@@ -20,3 +20,8 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+// Admin route
+Route::get('/admin', 'Admin\AdminController@redirect')->name('admin');
+Route::get('/admin/login', 'Admin\AdminController@showLoginView')->name('admin.login');
+Route::get('/admin/dashboard', 'AdminController@index')->name('admin.dashboard');
