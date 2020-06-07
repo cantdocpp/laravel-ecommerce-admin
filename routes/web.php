@@ -24,4 +24,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 // Admin route
 Route::get('/admin', 'Admin\AdminController@redirect')->name('admin');
 Route::get('/admin/login', 'Admin\AdminController@showLoginView')->name('admin.login');
-Route::get('/admin/dashboard', 'AdminController@index')->name('admin.dashboard');
+Route::get('/admin/dashboard', 'Admin\AdminController@index')->name('admin.dashboard');
+Route::get('/admin/users', 'Admin\UserController@index')->name('admin.users');
+Route::get('/admin/users/create', 'Admin\UserController@create')->name('admin.users.create');
+Route::post('/admin/users', 'Admin\UserController@store')->name('admin.users.store');

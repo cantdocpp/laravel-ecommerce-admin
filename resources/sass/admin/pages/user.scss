@@ -1,0 +1,82 @@
+.user__header {
+    font-size: 30px;
+}
+
+.user__add__search {
+    display: flex;
+    align-items: center;
+    margin-top: 20px;
+}
+
+.user__search {
+    flex-grow: 1;
+}
+
+.user__search__input {
+    padding-left: 10px;
+    padding-top: 7px;
+    padding-bottom: 7px;
+    border-radius: 6px;
+    background: #fff;
+    border: 1px solid #4A74FF;
+    width: 400px;
+    box-sizing: border-box;
+}
+
+.user__search__input {
+    outline: none;
+}
+
+.user__add__link {
+    padding: 10px;  
+    background: #4A74FF;
+    color: #fff;
+    font-weight: 300;
+    text-decoration: none;
+    border-radius: 6px;
+}
+
+.user-create-header {
+    font-size: 30px;
+    text-transform: capitalize;
+}
+
+.user-create-form {
+    margin-top: 30px;
+}
+
+.user-create__label + .user-create__label {
+    display: block;
+    margin-top: 20px;
+}
+
+.user-create__desc {
+    text-transform: capitalize;
+}
+
+.user-create__input {
+    padding-top: 7px;
+    padding-bottom: 7px;
+    padding-left: 10px;
+    border-radius: 7px;
+    border: 1px solid #4A74FF;
+    width: 300px;
+    margin-top: 10px;
+    outline: none;
+}
+
+.user-create__input[type=number]::-webkit-inner-spin-button, 
+.user-create__input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+.user-create__button {
+    background-color: #4A74FF;
+    border: 0;
+    padding: 10px 15px;
+    margin-top: 30px;
+    color: #fff;
+    border-radius: 7px;
+    cursor: pointer;
+}

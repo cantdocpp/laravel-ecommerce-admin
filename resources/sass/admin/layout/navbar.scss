@@ -1,0 +1,40 @@
+.navbar {
+    height: 60px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    position: fixed;
+    width: 100%;
+    background: #fff;
+    z-index: 5;
+}
+
+.navbar__logo {
+    flex-grow: 1;
+}
+
+.navbar__profile {
+    margin-right: 40px;
+    cursor: pointer;
+}
+
+.navbar__profile__item {
+    display: inline-flex;
+    vertical-align: middle;
+}
+
+.navbar__profile__role {
+    color: #000;
+    font-size: 15px;
+}
+
+.navbar__item__arrow {
+    border: 2px solid #000;
+    width: 8px;
+    height: 8px;
+    border-top: 0;
+    border-right: 0;
+    transform: rotate(-45deg);
+    margin-top: -4px;
+    margin-left: 6px;
+}

@@ -1,0 +1,83 @@
+@import url(https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;
+
+0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap);* {
+  padding: 0;
+  margin: 0;
+  font-family: "Open Sans", sans-serif;
+  font-size: 14px;
+}
+
+body {
+  background: #6DAAE8;
+}
+
+.admin-login {
+  height: 100vh;
+  width: 100vw;
+  box-sizing: border-box;
+}
+
+.form {
+  width: 450px;
+  padding: 40px;
+  box-sizing: border-box;
+  background: #fff;
+  border-radius: 4px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.form__header {
+  font-size: 30px;
+  font-weight: 600;
+}
+
+.form__inputs {
+  margin-top: 40px;
+}
+
+.form__input__description,
+.form__input {
+  color: black;
+}
+
+.form__input__description {
+  font-weight: 400;
+}
+
+.form__input {
+  margin-top: 5px;
+  border: 0;
+  color: #000;
+  border-bottom: 1px solid black;
+  padding: 5px 0;
+  box-sizing: border-box;
+  outline: none;
+  width: 100%;
+  display: block;
+}
+
+.form__input__label + .form__input__label {
+  margin-top: 25px;
+  display: block;
+}
+
+.form__button {
+  width: 100%;
+  background: #6FAAEA;
+  color: #fff;
+  border: 0;
+  margin-top: 30px;
+  padding: 8px 0;
+  border-radius: 4px;
+  outline: none;
+  cursor: pointer;
+  transition: background 0.25s ease-in-out;
+}
+
+.form__button:hover {
+  background: #81BEFF;
+}
+

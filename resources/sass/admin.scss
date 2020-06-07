@@ -1,1 +1,8 @@
-@import "admin/login";
+@import "admin/base/typography";
+@import "admin/base/reset";
+
+@import "admin/layout/navbar";
+@import "admin/layout/sidebar";
+@import "admin/layout/content";
+
+@import "admin/pages/user";
