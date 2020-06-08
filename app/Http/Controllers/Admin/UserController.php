@@ -54,4 +54,8 @@ class UserController extends Controller
 
         return redirect(route('admin.users'));
     }
+
+    public function getUserTableData() {
+        return User::paginate(15);
+    }
 }

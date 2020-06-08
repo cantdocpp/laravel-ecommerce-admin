@@ -18,7 +18,7 @@
     <link href="{{ asset('css/admin.css') }}" rel="stylesheet">
 </head>
 <body>
-    <div class="admin-page">
+    <div id="app" class="admin-page">
         <x-admin.navbar />
         <x-admin.aside />
         <div class="content">

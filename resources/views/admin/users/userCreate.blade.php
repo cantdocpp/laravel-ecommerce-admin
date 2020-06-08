@@ -81,7 +81,7 @@
                 </label>
                 <label class="user-create__label">
                     <div class="user-create__desc">Role</div>
-                    <select name="role" id="pet-select" class="user-create__role">
+                    <select name="role" class="user-create__role">
                         <option value="">Select User Role</option>
                         <option value="1">User</option>
                         <option value="2">Reseller</option>

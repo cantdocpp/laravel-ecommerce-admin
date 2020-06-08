@@ -198,3 +198,15 @@
   margin-top: 10px;
 }
 
+.user-sort {
+  display: block;
+  margin-top: 20px;
+}
+
+.user-sort__role {
+  padding: 5px 10px;
+  background: #fff;
+  border: 1px solid #4A74FF;
+  border-radius: 2px;
+}
+
