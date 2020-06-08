@@ -131,7 +131,16 @@
   border-radius: 6px;
 }
 
+.user-create-back {
+  color: #4A74FF;
+  font-weight: 400;
+  font-size: 16px;
+  text-decoration: none;
+  text-decoration: underline;
+}
+
 .user-create-header {
+  margin-top: 30px;
   font-size: 30px;
   text-transform: capitalize;
 }
@@ -174,5 +183,18 @@
   color: #fff;
   border-radius: 7px;
   cursor: pointer;
+}
+
+.user-create__error {
+  margin-top: 5px;
+  color: red;
+}
+
+.user-create__input--error {
+  border: 1px solid red;
+}
+
+.user-create__role {
+  margin-top: 10px;
 }
 
