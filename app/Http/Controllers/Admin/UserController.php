@@ -10,10 +10,15 @@ use App\User;
 
 class UserController extends Controller
 {
-    public function index() {
-        $users = User::paginate(15);
+    public function index(Request $request) {
+        $role = $request->query('role');
+        if ($role) {
+            $users = User::where('role', '=', $role)->paginate(15);
+        } else {
+            $users = User::paginate(15);
+        }
         return view('admin.users.user', [
-            'users' => $users
+            'users' => $users->appends(request()->query())
         ]);
     }
 

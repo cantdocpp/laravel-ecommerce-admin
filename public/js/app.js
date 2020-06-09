@@ -2033,6 +2033,58 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['users'],
@@ -2043,7 +2095,15 @@ __webpack_require__.r(__webpack_exports__);
       dialogId: null,
       activeOption: null,
       isSubmit: false,
-      pathRole: null
+      pathRole: null,
+      page: {
+        current_page: null,
+        last_page: null,
+        first_page_url: null,
+        prev_page_url: null,
+        next_page_url: null,
+        last_page_url: null
+      }
     };
   },
   methods: {
@@ -2092,7 +2152,8 @@ __webpack_require__.r(__webpack_exports__);
 
       var getQueryUrl = splitPathWithQuery.find(function (str) {
         return str.includes('role');
-      }); // Split all query string that we got into array
+      });
+      if (!getQueryUrl) return; // Split all query string that we got into array
 
       var splitQuery = getQueryUrl.split('&'); // Find array item that have 'role' string in it
 
@@ -2103,12 +2164,22 @@ __webpack_require__.r(__webpack_exports__);
       var splitRoleQuery = getRoleQueryString.split('='); // Assign what we got the the component state
 
       this.pathRole = splitRoleQuery[1];
+    },
+    pageActive: function pageActive(current) {
+      return current === this.page.current_page;
     }
   },
   mounted: function mounted() {
     this.userData = this.users.data;
+    this.page.current_page = this.users.current_page;
+    this.page.last_page = this.users.last_page;
+    this.page.first_page_url = this.users.first_page_url;
+    this.page.prev_page_url = this.users.prev_page_url;
+    this.page.next_page_url = this.users.next_page_url;
+    this.page.last_page_url = this.users.last_page_url;
     this.getPathRoles();
-    console.log(this.userData, '>>>>>>>>>>>>>');
+    console.log(this.users, '>>>>>>>>>>>>>');
+    console.log(window.location);
   }
 });
 
@@ -6608,7 +6679,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, ".user-sort[data-v-416e0a2d] {\n  display: block;\n  margin-top: 30px;\n  display: flex;\n  align-items: center;\n}\n.user-sort__option[data-v-416e0a2d] {\n  flex-grow: 1;\n}\n.user-sort__role[data-v-416e0a2d] {\n  padding: 5px 10px;\n  background: #fff;\n  border: 1px solid #4A74FF;\n  border-radius: 2px;\n}\n.user-sort__view[data-v-416e0a2d] {\n  font-weight: 300;\n}\n.user-sort--bold[data-v-416e0a2d] {\n  font-weight: 600;\n}\n.user-sort__page[data-v-416e0a2d] {\n  display: flex;\n  align-items: center;\n}\n.user-sort__link[data-v-416e0a2d] {\n  display: flex;\n}\n.user-table-wrapper[data-v-416e0a2d] {\n  margin-top: 20px;\n}\n.user-table[data-v-416e0a2d] {\n  width: 100%;\n  empty-cells: show;\n  background: #fff;\n  padding: 20px;\n  box-sizing: border-box;\n  border-radius: 4px;\n}\n.user-table-body[data-v-416e0a2d] {\n  display: block;\n  margin-top: 10px;\n}\n.user-table-check[data-v-416e0a2d] {\n  vertical-align: middle;\n}\nth[data-v-416e0a2d], td[data-v-416e0a2d] {\n  padding: 10px;\n  text-align: left;\n}\n.user-table__name__email[data-v-416e0a2d] {\n  display: flex;\n  flex-direction: column;\n}\n.user-table__name[data-v-416e0a2d] {\n  font-weight: 600;\n}\n.user-table__email[data-v-416e0a2d] {\n  font-weight: 300;\n  margin-top: 6px;\n}\n.user-table__more[data-v-416e0a2d] {\n  position: relative;\n}\n.user-table__options[data-v-416e0a2d] {\n  display: flex;\n  flex-direction: column;\n  cursor: pointer;\n}\n.user-table__option[data-v-416e0a2d] {\n  width: 4px;\n  height: 4px;\n  background: #000;\n  border-radius: 50%;\n  display: inline-block;\n}\n.user-table__option + .user-table__option[data-v-416e0a2d] {\n  margin-top: 2px;\n}\n.user-table__choose[data-v-416e0a2d] {\n  top: 0px;\n  display: flex;\n  flex-direction: column;\n  position: absolute;\n  right: 130%;\n  box-shadow: 2px 2px 5px #919191;\n  padding: 20px 30px;\n  box-sizing: border-box;\n  border: 0;\n  border-radius: 4px;\n}\n.user-table__choose__item[data-v-416e0a2d] {\n  cursor: pointer;\n}\n.user-table__choose__item + .user-table__choose__item[data-v-416e0a2d] {\n  margin-top: 10px;\n}", ""]);
+exports.push([module.i, ".user-sort[data-v-416e0a2d] {\n  display: block;\n  margin-top: 30px;\n  display: flex;\n  align-items: center;\n}\n.user-sort__option[data-v-416e0a2d] {\n  flex-grow: 1;\n}\n.user-sort__role[data-v-416e0a2d] {\n  padding: 5px 10px;\n  background: #fff;\n  border: 1px solid #4A74FF;\n  border-radius: 2px;\n}\n.user-sort__view[data-v-416e0a2d] {\n  font-weight: 300;\n}\n.user-sort--bold[data-v-416e0a2d] {\n  font-weight: 600;\n}\n.user-sort__page[data-v-416e0a2d] {\n  display: flex;\n  align-items: center;\n}\n.user-sort__link[data-v-416e0a2d] {\n  display: flex;\n}\n.user-table-wrapper[data-v-416e0a2d] {\n  margin-top: 20px;\n  background: #fff;\n  padding: 20px;\n  border-radius: 4px;\n  box-sizing: border-box;\n}\n.user-table[data-v-416e0a2d] {\n  width: 100%;\n  empty-cells: show;\n  box-sizing: border-box;\n}\n.user-table-body[data-v-416e0a2d] {\n  display: block;\n  margin-top: 10px;\n}\n.user-table-check[data-v-416e0a2d] {\n  vertical-align: middle;\n}\nth[data-v-416e0a2d], td[data-v-416e0a2d] {\n  padding: 10px;\n  text-align: left;\n}\n.user-table__name__email[data-v-416e0a2d] {\n  display: flex;\n  flex-direction: column;\n}\n.user-table__name[data-v-416e0a2d] {\n  font-weight: 600;\n}\n.user-table__email[data-v-416e0a2d] {\n  font-weight: 300;\n  margin-top: 6px;\n}\n.user-table__more[data-v-416e0a2d] {\n  position: relative;\n}\n.user-table__options[data-v-416e0a2d] {\n  display: flex;\n  flex-direction: column;\n  cursor: pointer;\n}\n.user-table__option[data-v-416e0a2d] {\n  width: 4px;\n  height: 4px;\n  background: #000;\n  border-radius: 50%;\n  display: inline-block;\n}\n.user-table__option + .user-table__option[data-v-416e0a2d] {\n  margin-top: 2px;\n}\n.user-table__choose[data-v-416e0a2d] {\n  top: 0px;\n  display: flex;\n  flex-direction: column;\n  position: absolute;\n  right: 130%;\n  box-shadow: 2px 2px 5px #919191;\n  padding: 20px 30px;\n  box-sizing: border-box;\n  border: 0;\n  border-radius: 4px;\n}\n.user-table__choose__item[data-v-416e0a2d] {\n  cursor: pointer;\n}\n.user-table__choose__item + .user-table__choose__item[data-v-416e0a2d] {\n  margin-top: 10px;\n}\n.user-table__paging[data-v-416e0a2d] {\n  display: flex;\n  align-items: center;\n  margin-top: 30px;\n  margin-left: 20px;\n}\n.user-table-page__paging__first[data-v-416e0a2d] {\n  display: flex;\n}\n.user-table__paging__arrow[data-v-416e0a2d] {\n  width: 10px;\n  height: 10px;\n  border-left: 2px solid #ddd;\n  border-bottom: 2px solid #ddd;\n}\n.user-table__paging__before[data-v-416e0a2d] {\n  display: flex;\n  margin-left: 10px;\n}\n.user-table__paging__next[data-v-416e0a2d] {\n  display: flex;\n  align-items: center;\n  margin-left: 20px;\n}\n.user-table__paging__arrow--next[data-v-416e0a2d] {\n  border-left: 2px solid #4A74FF;\n  border-bottom: 2px solid #4A74FF;\n  display: inline-flex;\n  transform: rotate(-135deg);\n}\n.user-table__paging__arrow--before[data-v-416e0a2d] {\n  transform: rotate(45deg);\n}\n.user-table__paging__arrow--last[data-v-416e0a2d] {\n  margin-left: -5px;\n}\n.user-table__paging__last[data-v-416e0a2d] {\n  display: flex;\n  align-items: center;\n}\n.user-table__paging__arrow--end[data-v-416e0a2d] {\n  margin-right: -5px;\n  margin-left: 10px;\n}\n.user-table__paging__number[data-v-416e0a2d] {\n  display: inline-flex;\n  align-items: center;\n  margin-left: 20px;\n}\n.user-table__paging__page[data-v-416e0a2d] {\n  color: #4A74FF;\n  text-decoration: none;\n  font-size: 16px;\n  display: inline-flex;\n}\n.user-table__paging__page + .user-table__paging__page[data-v-416e0a2d] {\n  margin-left: 15px;\n}\n.user__paging_active[data-v-416e0a2d] {\n  padding: 2px 6px;\n  border: 1px solid #4A74FF;\n  border-radius: 4px;\n}", ""]);
 
 // exports
 
@@ -38484,8 +38555,8 @@ var render = function() {
               _c(
                 "option",
                 {
-                  attrs: { value: "user" },
-                  domProps: { selected: _vm.pathRole === "user" }
+                  attrs: { value: "1" },
+                  domProps: { selected: _vm.pathRole === "1" }
                 },
                 [_vm._v("User")]
               ),
@@ -38493,8 +38564,8 @@ var render = function() {
               _c(
                 "option",
                 {
-                  attrs: { value: "reseller" },
-                  domProps: { selected: _vm.pathRole === "reseller" }
+                  attrs: { value: "2" },
+                  domProps: { selected: _vm.pathRole === "2" }
                 },
                 [_vm._v("Reseller")]
               ),
@@ -38502,8 +38573,8 @@ var render = function() {
               _c(
                 "option",
                 {
-                  attrs: { value: "admin" },
-                  domProps: { selected: _vm.pathRole === "admin" }
+                  attrs: { value: "3" },
+                  domProps: { selected: _vm.pathRole === "3" }
                 },
                 [_vm._v("Admin")]
               ),
@@ -38511,8 +38582,8 @@ var render = function() {
               _c(
                 "option",
                 {
-                  attrs: { value: "owner" },
-                  domProps: { selected: _vm.pathRole === "owner" }
+                  attrs: { value: "4" },
+                  domProps: { selected: _vm.pathRole === "4" }
                 },
                 [_vm._v("Owner")]
               )
@@ -38655,6 +38726,144 @@ var render = function() {
               ])
             }),
             0
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "user-table__paging" }, [
+          _c(
+            "a",
+            {
+              staticClass: "user-table-page__paging__first",
+              attrs: { href: _vm.page.first_page_url }
+            },
+            [
+              _c("div", {
+                staticClass:
+                  "user-table__paging__arrow user-table__paging__arrow--before"
+              }),
+              _vm._v(" "),
+              _c("div", {
+                staticClass:
+                  "user-table__paging__arrow user-table__paging__arrow--before user-table__paging__arrow--last"
+              })
+            ]
+          ),
+          _vm._v(" "),
+          _c("div", { staticClass: "user-table__paging__before" }, [
+            _c("a", {
+              staticClass:
+                "user-table__paging__arrow user-table__paging__arrow--before",
+              attrs: { href: _vm.page.prev_page_url }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "user-table__paging__number" }, [
+            _vm.page.prev_page_url
+              ? _c(
+                  "a",
+                  {
+                    staticClass: "user-table__paging__page",
+                    attrs: { href: _vm.page.prev_page_url }
+                  },
+                  [
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(_vm.page.current_page - 1) +
+                        "\n                "
+                    )
+                  ]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _c(
+              "a",
+              {
+                staticClass: "user-table__paging__page user__paging_active",
+                attrs: { href: "" }
+              },
+              [
+                _vm._v(
+                  "\n                    " +
+                    _vm._s(_vm.page.current_page) +
+                    "\n                "
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _vm.page.next_page_url
+              ? _c(
+                  "a",
+                  {
+                    staticClass: "user-table__paging__page",
+                    attrs: { href: _vm.page.next_page_url }
+                  },
+                  [
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(_vm.page.current_page + 1) +
+                        "\n                "
+                    )
+                  ]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.page.current_page < _vm.page.last_page &&
+            _vm.page.current_page + 1 < _vm.page.last_page
+              ? _c("span", { staticClass: "user-table__paging__page" }, [
+                  _vm._v("\n                    ...\n                ")
+                ])
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.page.current_page < _vm.page.last_page &&
+            _vm.page.current_page + 1 < _vm.page.last_page
+              ? _c(
+                  "a",
+                  {
+                    staticClass: "user-table__paging__page",
+                    attrs: { href: _vm.page.last_page_url }
+                  },
+                  [
+                    _vm._v(
+                      "\n                    " +
+                        _vm._s(_vm.page.last_page) +
+                        "\n                "
+                    )
+                  ]
+                )
+              : _vm._e()
+          ]),
+          _vm._v(" "),
+          _c(
+            "a",
+            {
+              staticClass: "user-table__paging__next",
+              attrs: { href: _vm.page.next_page_url }
+            },
+            [
+              _c("div", {
+                staticClass:
+                  "user-table__paging__arrow user-table__paging__arrow--next"
+              })
+            ]
+          ),
+          _vm._v(" "),
+          _c(
+            "a",
+            {
+              staticClass: "user-table__paging__last",
+              attrs: { href: _vm.page.last_page_url }
+            },
+            [
+              _c("div", {
+                staticClass:
+                  "user-table__paging__arrow user-table__paging__arrow--next user-table__paging__arrow--end"
+              }),
+              _vm._v(" "),
+              _c("div", {
+                staticClass:
+                  "user-table__paging__arrow user-table__paging__arrow--next"
+              })
+            ]
           )
         ])
       ])
