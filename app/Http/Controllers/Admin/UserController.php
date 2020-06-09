@@ -11,7 +11,10 @@ use App\User;
 class UserController extends Controller
 {
     public function index() {
-        return view('admin.users.user');
+        $users = User::paginate(15);
+        return view('admin.users.user', [
+            'users' => $users
+        ]);
     }
 
     public function create() {
@@ -55,7 +58,8 @@ class UserController extends Controller
         return redirect(route('admin.users'));
     }
 
-    public function getUserTableData() {
-        return User::paginate(15);
+    public function destroy(Request $request, User $user) {
+        $user->delete();
+        return 'success';
     }
 }

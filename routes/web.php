@@ -32,4 +32,5 @@ Route::post('/admin/users', 'Admin\UserController@store')->name('admin.users.sto
 // API routes
 Route::prefix('api')->group(function () {
     Route::get('admin/users', 'Admin\UserController@getUserTableData')->middleware('cors');
+    Route::delete('/admin/users/{user}', 'Admin\UserController@destroy')->name('admin.users.destroy');
 });

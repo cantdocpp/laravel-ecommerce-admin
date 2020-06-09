@@ -13,20 +13,8 @@
             </a>
         </div>
 
-        <user-table></user-table>
+        {{-- {{ app('request')->input('role') }} --}}
 
-        <div class="user-sort">
-            <div class="user-sort__option">
-                <select name="role" class="user-sort__role">
-                    <option value="">Role</option>
-                    <option value="1">User</option>
-                    <option value="2">Reseller</option>
-                    <option value="3">Admin</option>
-                    <option value="4">Owner</option>
-                </select>
-            </div>
-
-            <div class="user-sort__page"></div>
-        </div>
+        <user-table :users="{{ json_encode($users) }}"></user-table>
     </div>
 @endsection

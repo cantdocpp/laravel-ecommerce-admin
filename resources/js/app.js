@@ -20,6 +20,7 @@ window.Vue = require('vue');
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
+Vue.component('admin-modal', require('./admin/components/AppModal').default);
 Vue.component('user-table', require('./admin/pages/user/AppUserTable').default);
 
 /**
@@ -29,5 +30,5 @@ Vue.component('user-table', require('./admin/pages/user/AppUserTable').default);
  */
 
 const app = new Vue({
-    el: '#app',
+    el: '#app'
 });
