@@ -39076,7 +39076,7 @@ var render = function() {
                               "a",
                               {
                                 staticClass: "user-table__choose__item",
-                                attrs: { href: "#" }
+                                attrs: { href: "users/" + data.id }
                               },
                               [_vm._v("Edit")]
                             )

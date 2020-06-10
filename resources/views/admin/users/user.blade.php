@@ -1,5 +1,9 @@
 @extends('layouts.admin')
 
+@section('admin-title')
+    User list page
+@endsection
+
 @section('content')
     <div class="user">
         <h1 class="user__header">User List</h1>

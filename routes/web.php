@@ -28,6 +28,7 @@ Route::get('/admin/dashboard', 'Admin\AdminController@index')->name('admin.dashb
 Route::get('/admin/users', 'Admin\UserController@index')->name('admin.users');
 Route::get('/admin/users/create', 'Admin\UserController@create')->name('admin.users.create');
 Route::post('/admin/users', 'Admin\UserController@store')->name('admin.users.store');
+Route::get('/admin/users/{user}', 'Admin\UserController@show')->name('admin.users.show');
 
 // API routes
 Route::prefix('api')->group(function () {

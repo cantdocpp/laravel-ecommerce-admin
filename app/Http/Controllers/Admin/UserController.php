@@ -73,4 +73,10 @@ class UserController extends Controller
         User::destroy($userIdArray);
         return 'success';
     }
+
+    public function show(User $user) {
+        return view('admin.users.single', [
+            'user' => $user
+        ]);
+    }
 }

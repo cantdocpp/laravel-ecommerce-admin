@@ -102,7 +102,7 @@
                                 </div>
                                 <div class="user-table__choose" v-show="activeOption === data.id">
                                     <div class="user-table__choose__item" @click="openDialog(data.id)">Delete</div>
-                                    <a href="#" class="user-table__choose__item">Edit</a>
+                                    <a :href="`users/${data.id}`" class="user-table__choose__item">Edit</a>
                                 </div>
                             </div>
                         </td>
