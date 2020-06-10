@@ -23,5 +23,8 @@
         "vue": "^2.5.17",
         "vue-router": "^3.3.2",
         "vue-template-compiler": "^2.6.10"
+    },
+    "dependencies": {
+        "vue-click-outside": "^1.1.0"
     }
 }

@@ -41,7 +41,6 @@
                             <div class="user-table__name__email">
                                 <div class="user-table__name"> {{ data.name }} </div>
                                 <div class="user-table__email"> {{ data.email }} </div>
-                                {{data.id}}
                             </div>
                         </td>
                         <td>
@@ -60,7 +59,9 @@
                                 </div>
                             </div>
                         </td>
-                        <td>Blue</td>
+                        <td>
+                            {{ getUserCreatedDate(data.created_at) }}
+                        </td>
                         <td>
                             <div class="user-table__more">
                                 <div class="user-table__options" @click="toggleOptions(data.id)">
@@ -135,6 +136,7 @@
 
 <script>
     import axios from 'axios';
+    import ClickOutside from 'vue-click-outside'
 
     export default {
         props: ['users'],
@@ -165,7 +167,7 @@
                 this.dialogId = id;
             },
             toggleOptions(id) {
-                this.activeOption = id;
+                this.activeOption ? this.activeOption = null : this.activeOption = id;
             },
             closeModal() {
                 this.dialogId = null;
@@ -178,7 +180,7 @@
                     .then(response => {
                         if (response.data === 'success') {
                             this.dialogId = null;
-                            const deleteItemIndex = this.userData.find(el => el.id === id);
+                            const deleteItemIndex = this.userData.findIndex(el => el.id === id);
                             this.userData.splice(deleteItemIndex, 1);
                             this.activeOption = null;
                         }
@@ -216,19 +218,33 @@
             },
             pageActive(current) {
                 return current === this.page.current_page;
+            },
+            getUserCreatedDate(date) {
+                const months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+                const newDate = new Date(date);
+                const day = newDate.getDay();
+                const month = months[newDate.getMonth()];
+                const year = newDate.getFullYear();
+                return `${day} ${month} ${year}`;
+            },
+            getPageData() {
+                this.page.current_page = this.users.current_page;
+                this.page.last_page = this.users.last_page;
+                this.page.first_page_url = this.users.first_page_url;
+                this.page.prev_page_url = this.users.prev_page_url;
+                this.page.next_page_url = this.users.next_page_url;
+                this.page.last_page_url = this.users.last_page_url;
             }
         },
         mounted() {
             this.userData = this.users.data;
-            this.page.current_page = this.users.current_page;
-            this.page.last_page = this.users.last_page;
-            this.page.first_page_url = this.users.first_page_url;
-            this.page.prev_page_url = this.users.prev_page_url;
-            this.page.next_page_url = this.users.next_page_url;
-            this.page.last_page_url = this.users.last_page_url;
             this.getPathRoles();
+            this.getPageData();
             console.log(this.users, '>>>>>>>>>>>>>')
             console.log(window.location)
+        },
+        directives: {
+            ClickOutside
         }
     }
 </script>

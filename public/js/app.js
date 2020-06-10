@@ -1950,6 +1950,8 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
 /* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vue_click_outside__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-click-outside */ "./node_modules/vue-click-outside/index.js");
+/* harmony import */ var vue_click_outside__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(vue_click_outside__WEBPACK_IMPORTED_MODULE_1__);
 //
 //
 //
@@ -2085,6 +2087,8 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: ['users'],
@@ -2115,7 +2119,7 @@ __webpack_require__.r(__webpack_exports__);
       this.dialogId = id;
     },
     toggleOptions: function toggleOptions(id) {
-      this.activeOption = id;
+      this.activeOption ? this.activeOption = null : this.activeOption = id;
     },
     closeModal: function closeModal() {
       this.dialogId = null;
@@ -2130,7 +2134,7 @@ __webpack_require__.r(__webpack_exports__);
         if (response.data === 'success') {
           _this.dialogId = null;
 
-          var deleteItemIndex = _this.userData.find(function (el) {
+          var deleteItemIndex = _this.userData.findIndex(function (el) {
             return el.id === id;
           });
 
@@ -2167,19 +2171,33 @@ __webpack_require__.r(__webpack_exports__);
     },
     pageActive: function pageActive(current) {
       return current === this.page.current_page;
+    },
+    getUserCreatedDate: function getUserCreatedDate(date) {
+      var months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+      var newDate = new Date(date);
+      var day = newDate.getDay();
+      var month = months[newDate.getMonth()];
+      var year = newDate.getFullYear();
+      return "".concat(day, " ").concat(month, " ").concat(year);
+    },
+    getPageData: function getPageData() {
+      this.page.current_page = this.users.current_page;
+      this.page.last_page = this.users.last_page;
+      this.page.first_page_url = this.users.first_page_url;
+      this.page.prev_page_url = this.users.prev_page_url;
+      this.page.next_page_url = this.users.next_page_url;
+      this.page.last_page_url = this.users.last_page_url;
     }
   },
   mounted: function mounted() {
     this.userData = this.users.data;
-    this.page.current_page = this.users.current_page;
-    this.page.last_page = this.users.last_page;
-    this.page.first_page_url = this.users.first_page_url;
-    this.page.prev_page_url = this.users.prev_page_url;
-    this.page.next_page_url = this.users.next_page_url;
-    this.page.last_page_url = this.users.last_page_url;
     this.getPathRoles();
+    this.getPageData();
     console.log(this.users, '>>>>>>>>>>>>>');
     console.log(window.location);
+  },
+  directives: {
+    ClickOutside: vue_click_outside__WEBPACK_IMPORTED_MODULE_1___default.a
   }
 });
 
@@ -38440,6 +38458,87 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 
 /***/ }),
 
+/***/ "./node_modules/vue-click-outside/index.js":
+/*!*************************************************!*\
+  !*** ./node_modules/vue-click-outside/index.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+function validate(binding) {
+  if (typeof binding.value !== 'function') {
+    console.warn('[Vue-click-outside:] provided expression', binding.expression, 'is not a function.')
+    return false
+  }
+
+  return true
+}
+
+function isPopup(popupItem, elements) {
+  if (!popupItem || !elements)
+    return false
+
+  for (var i = 0, len = elements.length; i < len; i++) {
+    try {
+      if (popupItem.contains(elements[i])) {
+        return true
+      }
+      if (elements[i].contains(popupItem)) {
+        return false
+      }
+    } catch(e) {
+      return false
+    }
+  }
+
+  return false
+}
+
+function isServer(vNode) {
+  return typeof vNode.componentInstance !== 'undefined' && vNode.componentInstance.$isServer
+}
+
+exports = module.exports = {
+  bind: function (el, binding, vNode) {
+    if (!validate(binding)) return
+
+    // Define Handler and cache it on the element
+    function handler(e) {
+      if (!vNode.context) return
+
+      // some components may have related popup item, on which we shall prevent the click outside event handler.
+      var elements = e.path || (e.composedPath && e.composedPath())
+      elements && elements.length > 0 && elements.unshift(e.target)
+
+      if (el.contains(e.target) || isPopup(vNode.context.popupItem, elements)) return
+
+      el.__vueClickOutside__.callback(e)
+    }
+
+    // add Event Listeners
+    el.__vueClickOutside__ = {
+      handler: handler,
+      callback: binding.value
+    }
+    const clickHandler = 'ontouchstart' in document.documentElement ? 'touchstart' : 'click';
+    !isServer(vNode) && document.addEventListener(clickHandler, handler)
+  },
+
+  update: function (el, binding) {
+    if (validate(binding)) el.__vueClickOutside__.callback = binding.value
+  },
+
+  unbind: function (el, binding, vNode) {
+    // Remove Event Listeners
+    const clickHandler = 'ontouchstart' in document.documentElement ? 'touchstart' : 'click';
+    !isServer(vNode) && el.__vueClickOutside__ && document.removeEventListener(clickHandler, el.__vueClickOutside__.handler)
+    delete el.__vueClickOutside__
+  }
+}
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/admin/components/AppModal.vue?vue&type=template&id=36197b92&":
 /*!*****************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/admin/components/AppModal.vue?vue&type=template&id=36197b92& ***!
@@ -38627,12 +38726,7 @@ var render = function() {
                     _vm._v(" "),
                     _c("div", { staticClass: "user-table__email" }, [
                       _vm._v(" " + _vm._s(data.email) + " ")
-                    ]),
-                    _vm._v(
-                      "\n                            " +
-                        _vm._s(data.id) +
-                        "\n                        "
-                    )
+                    ])
                   ])
                 ]),
                 _vm._v(" "),
@@ -38666,7 +38760,13 @@ var render = function() {
                   ])
                 ]),
                 _vm._v(" "),
-                _c("td", [_vm._v("Blue")]),
+                _c("td", [
+                  _vm._v(
+                    "\n                        " +
+                      _vm._s(_vm.getUserCreatedDate(data.created_at)) +
+                      "\n                    "
+                  )
+                ]),
                 _vm._v(" "),
                 _c("td", [
                   _c("div", { staticClass: "user-table__more" }, [
