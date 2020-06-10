@@ -2088,6 +2088,37 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -2100,6 +2131,9 @@ __webpack_require__.r(__webpack_exports__);
       activeOption: null,
       isSubmit: false,
       pathRole: null,
+      bulkDelete: false,
+      checkAll: false,
+      checkedItem: [],
       page: {
         current_page: null,
         last_page: null,
@@ -2118,34 +2152,69 @@ __webpack_require__.r(__webpack_exports__);
     openDialog: function openDialog(id) {
       this.dialogId = id;
     },
+    openBulkDeleteDialog: function openBulkDeleteDialog() {
+      this.bulkDelete = this.checkedItem;
+    },
     toggleOptions: function toggleOptions(id) {
       this.activeOption ? this.activeOption = null : this.activeOption = id;
     },
     closeModal: function closeModal() {
       this.dialogId = null;
+      this.bulkDelete = false;
+    },
+    bulkDeleteUser: function bulkDeleteUser() {
+      var _this = this;
+
+      this.bulkDelete = true;
+      this.isSubmit = true;
+      var route = "".concat("http://localhost:8000/api/admin/", "users/");
+      axios__WEBPACK_IMPORTED_MODULE_0___default.a["delete"](route, {
+        data: {
+          user: this.checkedItem
+        }
+      }).then(function (response) {
+        _this.checkedItem.forEach(function (item) {
+          var itemIndex = _this.userData.findIndex(function (data) {
+            return data.id === item;
+          });
+
+          _this.userData.splice(itemIndex, 1);
+        });
+
+        _this.userData.forEach(function (data) {
+          _this.$set(data, 'check', false);
+        });
+
+        _this.checkedItem = [];
+      })["catch"](function (error) {
+        console.log(error);
+      })["finally"](function () {
+        _this.bulkDelete = false;
+        _this.isSubmit = false;
+      });
     },
     deleteUser: function deleteUser() {
-      var _this = this;
+      var _this2 = this;
 
       var id = this.dialogId;
       var route = "".concat("http://localhost:8000/api/admin/", "users/").concat(id);
       this.isSubmit = true;
       axios__WEBPACK_IMPORTED_MODULE_0___default.a["delete"](route).then(function (response) {
         if (response.data === 'success') {
-          _this.dialogId = null;
+          _this2.dialogId = null;
 
-          var deleteItemIndex = _this.userData.findIndex(function (el) {
+          var deleteItemIndex = _this2.userData.findIndex(function (el) {
             return el.id === id;
           });
 
-          _this.userData.splice(deleteItemIndex, 1);
+          _this2.userData.splice(deleteItemIndex, 1);
 
-          _this.activeOption = null;
+          _this2.activeOption = null;
         }
       })["catch"](function (error) {
         console.log(error);
       })["finally"](function () {
-        _this.isSubmit = false;
+        _this2.isSubmit = false;
       });
     },
     getPathRoles: function getPathRoles() {
@@ -2187,6 +2256,44 @@ __webpack_require__.r(__webpack_exports__);
       this.page.prev_page_url = this.users.prev_page_url;
       this.page.next_page_url = this.users.next_page_url;
       this.page.last_page_url = this.users.last_page_url;
+    },
+    rowCheck: function rowCheck(index) {
+      var checkedItem = this.userData[index].check;
+      var userId = this.userData[index].id; // https://vuejs.org/v2/guide/reactivity.html#Change-Detection-Caveats
+
+      if (checkedItem) {
+        this.$set(this.userData[index], 'check', false);
+        var checkedIdIndex = this.checkedItem.findIndex(function (item) {
+          return item === userId;
+        });
+        this.checkedItem.splice(checkedIdIndex, 1);
+      } else {
+        this.$set(this.userData[index], 'check', true);
+        this.checkedItem.push(userId);
+      }
+    },
+    bulkCheck: function bulkCheck() {
+      var _this3 = this;
+
+      if (!this.checkAll) {
+        this.userData.forEach(function (data, i) {
+          _this3.$set(data, 'check', false);
+        });
+        this.checkedItem = [];
+      } else {
+        this.userData.forEach(function (data, i) {
+          if (!data.check) {
+            _this3.checkedItem.push(data.id);
+          }
+
+          _this3.$set(data, 'check', true);
+        });
+      }
+    }
+  },
+  computed: {
+    checkedItemLength: function checkedItemLength() {
+      return this.checkedItem.length;
     }
   },
   mounted: function mounted() {
@@ -6697,7 +6804,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../../node_modules/c
 
 
 // module
-exports.push([module.i, ".user-sort[data-v-416e0a2d] {\n  display: block;\n  margin-top: 30px;\n  display: flex;\n  align-items: center;\n}\n.user-sort__option[data-v-416e0a2d] {\n  flex-grow: 1;\n}\n.user-sort__role[data-v-416e0a2d] {\n  padding: 5px 10px;\n  background: #fff;\n  border: 1px solid #4A74FF;\n  border-radius: 2px;\n}\n.user-sort__view[data-v-416e0a2d] {\n  font-weight: 300;\n}\n.user-sort--bold[data-v-416e0a2d] {\n  font-weight: 600;\n}\n.user-sort__page[data-v-416e0a2d] {\n  display: flex;\n  align-items: center;\n}\n.user-sort__link[data-v-416e0a2d] {\n  display: flex;\n}\n.user-table-wrapper[data-v-416e0a2d] {\n  margin-top: 20px;\n  background: #fff;\n  padding: 20px;\n  border-radius: 4px;\n  box-sizing: border-box;\n}\n.user-table[data-v-416e0a2d] {\n  width: 100%;\n  empty-cells: show;\n  box-sizing: border-box;\n}\n.user-table-body[data-v-416e0a2d] {\n  display: block;\n  margin-top: 10px;\n}\n.user-table-check[data-v-416e0a2d] {\n  vertical-align: middle;\n}\nth[data-v-416e0a2d], td[data-v-416e0a2d] {\n  padding: 10px;\n  text-align: left;\n}\n.user-table__name__email[data-v-416e0a2d] {\n  display: flex;\n  flex-direction: column;\n}\n.user-table__name[data-v-416e0a2d] {\n  font-weight: 600;\n}\n.user-table__email[data-v-416e0a2d] {\n  font-weight: 300;\n  margin-top: 6px;\n}\n.user-table__more[data-v-416e0a2d] {\n  position: relative;\n}\n.user-table__options[data-v-416e0a2d] {\n  display: flex;\n  flex-direction: column;\n  cursor: pointer;\n}\n.user-table__option[data-v-416e0a2d] {\n  width: 4px;\n  height: 4px;\n  background: #000;\n  border-radius: 50%;\n  display: inline-block;\n}\n.user-table__option + .user-table__option[data-v-416e0a2d] {\n  margin-top: 2px;\n}\n.user-table__choose[data-v-416e0a2d] {\n  top: 0px;\n  display: flex;\n  flex-direction: column;\n  position: absolute;\n  right: 130%;\n  box-shadow: 2px 2px 5px #919191;\n  padding: 20px 30px;\n  box-sizing: border-box;\n  border: 0;\n  border-radius: 4px;\n}\n.user-table__choose__item[data-v-416e0a2d] {\n  cursor: pointer;\n}\n.user-table__choose__item + .user-table__choose__item[data-v-416e0a2d] {\n  margin-top: 10px;\n}\n.user-table__paging[data-v-416e0a2d] {\n  display: flex;\n  align-items: center;\n  margin-top: 30px;\n  margin-left: 20px;\n}\n.user-table-page__paging__first[data-v-416e0a2d] {\n  display: flex;\n}\n.user-table__paging__arrow[data-v-416e0a2d] {\n  width: 10px;\n  height: 10px;\n  border-left: 2px solid #ddd;\n  border-bottom: 2px solid #ddd;\n}\n.user-table__paging__before[data-v-416e0a2d] {\n  display: flex;\n  margin-left: 10px;\n}\n.user-table__paging__next[data-v-416e0a2d] {\n  display: flex;\n  align-items: center;\n  margin-left: 20px;\n}\n.user-table__paging__arrow--next[data-v-416e0a2d] {\n  border-left: 2px solid #4A74FF;\n  border-bottom: 2px solid #4A74FF;\n  display: inline-flex;\n  transform: rotate(-135deg);\n}\n.user-table__paging__arrow--before[data-v-416e0a2d] {\n  transform: rotate(45deg);\n}\n.user-table__paging__arrow--last[data-v-416e0a2d] {\n  margin-left: -5px;\n}\n.user-table__paging__last[data-v-416e0a2d] {\n  display: flex;\n  align-items: center;\n}\n.user-table__paging__arrow--end[data-v-416e0a2d] {\n  margin-right: -5px;\n  margin-left: 10px;\n}\n.user-table__paging__number[data-v-416e0a2d] {\n  display: inline-flex;\n  align-items: center;\n  margin-left: 20px;\n}\n.user-table__paging__page[data-v-416e0a2d] {\n  color: #4A74FF;\n  text-decoration: none;\n  font-size: 16px;\n  display: inline-flex;\n}\n.user-table__paging__page + .user-table__paging__page[data-v-416e0a2d] {\n  margin-left: 15px;\n}\n.user__paging_active[data-v-416e0a2d] {\n  padding: 2px 6px;\n  border: 1px solid #4A74FF;\n  border-radius: 4px;\n}", ""]);
+exports.push([module.i, ".user-sort[data-v-416e0a2d] {\n  display: block;\n  margin-top: 30px;\n  display: flex;\n  align-items: center;\n}\n.user-sort__option[data-v-416e0a2d] {\n  flex-grow: 1;\n}\n.user-sort__role[data-v-416e0a2d] {\n  padding: 5px 10px;\n  background: #fff;\n  border: 1px solid #4A74FF;\n  border-radius: 2px;\n}\n.user-sort__view[data-v-416e0a2d] {\n  font-weight: 300;\n}\n.user-table__row[data-v-416e0a2d] {\n  margin-top: 10px;\n}\n.user-sort--bold[data-v-416e0a2d] {\n  font-weight: 600;\n}\n.user-sort__page[data-v-416e0a2d] {\n  display: flex;\n  align-items: center;\n}\n.user-sort__link[data-v-416e0a2d] {\n  display: flex;\n}\n.user-table-wrapper[data-v-416e0a2d] {\n  margin-top: 20px;\n  background: #fff;\n  padding: 20px;\n  border-radius: 4px;\n  box-sizing: border-box;\n}\n.user-table[data-v-416e0a2d] {\n  width: 100%;\n  empty-cells: show;\n  box-sizing: border-box;\n  border-collapse: separate;\n  border-spacing: 0 10px;\n}\n.user-table__action[data-v-416e0a2d] {\n  display: flex;\n  align-items: center;\n}\n.user-action__choosed[data-v-416e0a2d] {\n  font-weight: 400;\n}\n.user-action__delete[data-v-416e0a2d] {\n  background: #ff4a4a;\n  padding: 7px 12px;\n  color: #fff;\n  border: 0;\n  border-radius: 6px;\n  margin-left: 20px;\n  cursor: pointer;\n}\n.user-table-body[data-v-416e0a2d] {\n  display: block;\n  margin-top: 10px;\n}\n.user-table-check[data-v-416e0a2d] {\n  vertical-align: middle;\n}\nth[data-v-416e0a2d], td[data-v-416e0a2d] {\n  padding: 10px;\n  text-align: left;\n}\n.row__checked[data-v-416e0a2d] {\n  background: #bfccf2;\n}\n.user-table__name__email[data-v-416e0a2d] {\n  display: flex;\n  flex-direction: column;\n}\n.user-table__name[data-v-416e0a2d] {\n  font-weight: 600;\n}\n.user-table__email[data-v-416e0a2d] {\n  font-weight: 300;\n  margin-top: 6px;\n}\n.user-table__more[data-v-416e0a2d] {\n  position: relative;\n}\n.user-table__options[data-v-416e0a2d] {\n  display: flex;\n  flex-direction: column;\n  cursor: pointer;\n}\n.user-table__option[data-v-416e0a2d] {\n  width: 4px;\n  height: 4px;\n  background: #000;\n  border-radius: 50%;\n  display: inline-block;\n}\n.user-table__option + .user-table__option[data-v-416e0a2d] {\n  margin-top: 2px;\n}\n.user-table__choose[data-v-416e0a2d] {\n  top: 0px;\n  display: flex;\n  flex-direction: column;\n  position: absolute;\n  right: 130%;\n  box-shadow: 2px 2px 5px #919191;\n  padding: 20px 30px;\n  box-sizing: border-box;\n  border: 0;\n  border-radius: 4px;\n}\n.user-table__choose__item[data-v-416e0a2d] {\n  cursor: pointer;\n  color: #000;\n  text-decoration: none;\n}\n.user-table__choose__item + .user-table__choose__item[data-v-416e0a2d] {\n  margin-top: 10px;\n}\n.user-table__paging[data-v-416e0a2d] {\n  display: flex;\n  align-items: center;\n  margin-top: 30px;\n  margin-left: 20px;\n}\n.user-table-page__paging__first[data-v-416e0a2d] {\n  display: flex;\n}\n.user-table__paging__arrow[data-v-416e0a2d] {\n  width: 10px;\n  height: 10px;\n  border-left: 2px solid #ddd;\n  border-bottom: 2px solid #ddd;\n}\n.user-table__paging__before[data-v-416e0a2d] {\n  display: flex;\n  margin-left: 10px;\n}\n.user-table__paging__next[data-v-416e0a2d] {\n  display: flex;\n  align-items: center;\n  margin-left: 20px;\n}\n.user-table__paging__arrow--next[data-v-416e0a2d] {\n  border-left: 2px solid #4A74FF;\n  border-bottom: 2px solid #4A74FF;\n  display: inline-flex;\n  transform: rotate(-135deg);\n}\n.user-table__paging__arrow--before[data-v-416e0a2d] {\n  transform: rotate(45deg);\n}\n.user-table__paging__arrow--last[data-v-416e0a2d] {\n  margin-left: -5px;\n}\n.user-table__paging__last[data-v-416e0a2d] {\n  display: flex;\n  align-items: center;\n}\n.user-table__paging__arrow--end[data-v-416e0a2d] {\n  margin-right: -5px;\n  margin-left: 10px;\n}\n.user-table__paging__number[data-v-416e0a2d] {\n  display: inline-flex;\n  align-items: center;\n  margin-left: 20px;\n}\n.user-table__paging__page[data-v-416e0a2d] {\n  color: #4A74FF;\n  text-decoration: none;\n  font-size: 16px;\n  display: inline-flex;\n}\n.user-table__paging__page + .user-table__paging__page[data-v-416e0a2d] {\n  margin-left: 15px;\n}\n.user__paging_active[data-v-416e0a2d] {\n  padding: 2px 7px;\n  border: 1px solid #4A74FF;\n  border-radius: 4px;\n}", ""]);
 
 // exports
 
@@ -38635,6 +38742,32 @@ var render = function() {
         [_vm._v("\n        Are you sure you want to delete this user ?\n    ")]
       ),
       _vm._v(" "),
+      _c(
+        "admin-modal",
+        {
+          directives: [
+            {
+              name: "show",
+              rawName: "v-show",
+              value: _vm.bulkDelete,
+              expression: "bulkDelete"
+            }
+          ],
+          attrs: { "is-submit": _vm.isSubmit },
+          on: {
+            close: _vm.closeModal,
+            submit: function($event) {
+              return _vm.bulkDeleteUser()
+            }
+          }
+        },
+        [
+          _vm._v(
+            "\n        Are you sure you want to delete all choosed users ?\n    "
+          )
+        ]
+      ),
+      _vm._v(" "),
       _c("div", { staticClass: "user-sort" }, [
         _c("div", { staticClass: "user-sort__option" }, [
           _c(
@@ -38709,125 +38842,255 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "user-table-wrapper" }, [
-        _c("table", { staticClass: "user-table" }, [
-          _vm._m(0),
-          _vm._v(" "),
-          _c(
-            "tbody",
-            _vm._l(_vm.userData, function(data) {
-              return _c("tr", { key: data.id }, [
-                _vm._m(1, true),
-                _vm._v(" "),
-                _c("td", [
-                  _c("div", { staticClass: "user-table__name__email" }, [
-                    _c("div", { staticClass: "user-table__name" }, [
-                      _vm._v(" " + _vm._s(data.name) + " ")
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "user-table__email" }, [
-                      _vm._v(" " + _vm._s(data.email) + " ")
+        _c(
+          "table",
+          {
+            staticClass: "user-table",
+            attrs: { cellspacing: "0", cellpadding: "0" }
+          },
+          [
+            _c("thead", [
+              _vm.checkedItemLength > 0
+                ? _c("tr", [
+                    _c("th", { attrs: { colspan: "2" } }, [
+                      _c("div", { staticClass: "user-table__action" }, [
+                        _c("div", { staticClass: "user-action__choosed" }, [
+                          _vm._v(
+                            "\n                                " +
+                              _vm._s(_vm.checkedItemLength) +
+                              "/15 User Choosed\n                            "
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c(
+                          "button",
+                          {
+                            staticClass: "user-action__delete",
+                            on: { click: _vm.openBulkDeleteDialog }
+                          },
+                          [
+                            _vm._v(
+                              "\n                                Delete\n                            "
+                            )
+                          ]
+                        )
+                      ])
                     ])
                   ])
-                ]),
-                _vm._v(" "),
-                _c("td", [
-                  _c("div", { staticClass: "user-table__role" }, [
-                    data.role === 1
-                      ? _c("div", { staticClass: "user-table__role__item" }, [
-                          _vm._v(
-                            "\n                                User\n                            "
-                          )
-                        ])
-                      : data.role === 2
-                      ? _c("div", { staticClass: "user-table__role__item" }, [
-                          _vm._v(
-                            "\n                                Reseller\n                            "
-                          )
-                        ])
-                      : data.role === 3
-                      ? _c("div", { staticClass: "user-table__role__item" }, [
-                          _vm._v(
-                            "\n                                Admin\n                            "
-                          )
-                        ])
-                      : data.role === 4
-                      ? _c("div", { staticClass: "user-table__role__item" }, [
-                          _vm._v(
-                            "\n                                Owner\n                            "
-                          )
-                        ])
-                      : _vm._e()
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("td", [
-                  _vm._v(
-                    "\n                        " +
-                      _vm._s(_vm.getUserCreatedDate(data.created_at)) +
-                      "\n                    "
-                  )
-                ]),
-                _vm._v(" "),
-                _c("td", [
-                  _c("div", { staticClass: "user-table__more" }, [
-                    _c(
-                      "div",
+                : _vm._e(),
+              _vm._v(" "),
+              _c("tr", [
+                _c("th", [
+                  _c("input", {
+                    directives: [
                       {
-                        staticClass: "user-table__options",
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.checkAll,
+                        expression: "checkAll"
+                      }
+                    ],
+                    staticClass: "user-table-check",
+                    attrs: { type: "checkbox" },
+                    domProps: {
+                      checked: Array.isArray(_vm.checkAll)
+                        ? _vm._i(_vm.checkAll, null) > -1
+                        : _vm.checkAll
+                    },
+                    on: {
+                      change: [
+                        function($event) {
+                          var $$a = _vm.checkAll,
+                            $$el = $event.target,
+                            $$c = $$el.checked ? true : false
+                          if (Array.isArray($$a)) {
+                            var $$v = null,
+                              $$i = _vm._i($$a, $$v)
+                            if ($$el.checked) {
+                              $$i < 0 && (_vm.checkAll = $$a.concat([$$v]))
+                            } else {
+                              $$i > -1 &&
+                                (_vm.checkAll = $$a
+                                  .slice(0, $$i)
+                                  .concat($$a.slice($$i + 1)))
+                            }
+                          } else {
+                            _vm.checkAll = $$c
+                          }
+                        },
+                        _vm.bulkCheck
+                      ]
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("th", [_vm._v("Name")]),
+                _vm._v(" "),
+                _c("th", [_vm._v("Role")]),
+                _vm._v(" "),
+                _c("th", [_vm._v("Date Created")]),
+                _vm._v(" "),
+                _c("th")
+              ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "tbody",
+              _vm._l(_vm.userData, function(data, i) {
+                return _c(
+                  "tr",
+                  {
+                    key: i,
+                    staticClass: "user-table__row",
+                    class: { row__checked: data.check }
+                  },
+                  [
+                    _c("td", [
+                      _c("input", {
+                        staticClass: "user-table-check",
+                        attrs: { type: "checkbox" },
+                        domProps: { checked: data.check },
                         on: {
-                          click: function($event) {
-                            return _vm.toggleOptions(data.id)
+                          change: function($event) {
+                            return _vm.rowCheck(i)
                           }
                         }
-                      },
-                      [
-                        _c("div", { staticClass: "user-table__option" }),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "user-table__option" }),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "user-table__option" })
-                      ]
-                    ),
+                      })
+                    ]),
                     _vm._v(" "),
-                    _c(
-                      "div",
-                      {
-                        directives: [
-                          {
-                            name: "show",
-                            rawName: "v-show",
-                            value: _vm.activeOption === data.id,
-                            expression: "activeOption === data.id"
-                          }
-                        ],
-                        staticClass: "user-table__choose"
-                      },
-                      [
+                    _c("td", [
+                      _c("div", { staticClass: "user-table__name__email" }, [
+                        _c("div", { staticClass: "user-table__name" }, [
+                          _vm._v(" " + _vm._s(data.name) + " ")
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "user-table__email" }, [
+                          _vm._v(" " + _vm._s(data.email) + " ")
+                        ])
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c("div", { staticClass: "user-table__role" }, [
+                        data.role === 1
+                          ? _c(
+                              "div",
+                              { staticClass: "user-table__role__item" },
+                              [
+                                _vm._v(
+                                  "\n                                User\n                            "
+                                )
+                              ]
+                            )
+                          : data.role === 2
+                          ? _c(
+                              "div",
+                              { staticClass: "user-table__role__item" },
+                              [
+                                _vm._v(
+                                  "\n                                Reseller\n                            "
+                                )
+                              ]
+                            )
+                          : data.role === 3
+                          ? _c(
+                              "div",
+                              { staticClass: "user-table__role__item" },
+                              [
+                                _vm._v(
+                                  "\n                                Admin\n                            "
+                                )
+                              ]
+                            )
+                          : data.role === 4
+                          ? _c(
+                              "div",
+                              { staticClass: "user-table__role__item" },
+                              [
+                                _vm._v(
+                                  "\n                                Owner\n                            "
+                                )
+                              ]
+                            )
+                          : _vm._e()
+                      ])
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(_vm.getUserCreatedDate(data.created_at)) +
+                          "\n                    "
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c("div", { staticClass: "user-table__more" }, [
                         _c(
                           "div",
                           {
-                            staticClass: "user-table__choose__item",
+                            staticClass: "user-table__options",
                             on: {
                               click: function($event) {
-                                return _vm.openDialog(data.id)
+                                return _vm.toggleOptions(data.id)
                               }
                             }
                           },
-                          [_vm._v("Delete")]
+                          [
+                            _c("div", { staticClass: "user-table__option" }),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "user-table__option" }),
+                            _vm._v(" "),
+                            _c("div", { staticClass: "user-table__option" })
+                          ]
                         ),
                         _vm._v(" "),
-                        _c("div", { staticClass: "user-table__choose__item" }, [
-                          _vm._v("Edit")
-                        ])
-                      ]
-                    )
-                  ])
-                ])
-              ])
-            }),
-            0
-          )
-        ]),
+                        _c(
+                          "div",
+                          {
+                            directives: [
+                              {
+                                name: "show",
+                                rawName: "v-show",
+                                value: _vm.activeOption === data.id,
+                                expression: "activeOption === data.id"
+                              }
+                            ],
+                            staticClass: "user-table__choose"
+                          },
+                          [
+                            _c(
+                              "div",
+                              {
+                                staticClass: "user-table__choose__item",
+                                on: {
+                                  click: function($event) {
+                                    return _vm.openDialog(data.id)
+                                  }
+                                }
+                              },
+                              [_vm._v("Delete")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "a",
+                              {
+                                staticClass: "user-table__choose__item",
+                                attrs: { href: "#" }
+                              },
+                              [_vm._v("Edit")]
+                            )
+                          ]
+                        )
+                      ])
+                    ])
+                  ]
+                )
+              }),
+              0
+            )
+          ]
+        ),
         _vm._v(" "),
         _c("div", { staticClass: "user-table__paging" }, [
           _c(
@@ -38975,37 +39238,7 @@ var render = function() {
     1
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th"),
-        _vm._v(" "),
-        _c("th", [_vm._v("Name")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Role")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Date Created")]),
-        _vm._v(" "),
-        _c("th")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("input", {
-        staticClass: "user-table-check",
-        attrs: { type: "checkbox", name: "usercheck" }
-      })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 

@@ -67,4 +67,10 @@ class UserController extends Controller
         $user->delete();
         return 'success';
     }
+
+    public function bulkDestroy(Request $request) {
+        $userIdArray = $request->user;
+        User::destroy($userIdArray);
+        return 'success';
+    }
 }

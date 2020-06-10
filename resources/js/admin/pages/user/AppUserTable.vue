@@ -3,6 +3,9 @@
          <admin-modal v-show="dialogId" @close="closeModal" @submit="deleteUser()" :is-submit="isSubmit">
             Are you sure you want to delete this user ?
         </admin-modal>
+        <admin-modal v-show="bulkDelete" @close="closeModal" @submit="bulkDeleteUser()" :is-submit="isSubmit">
+            Are you sure you want to delete all choosed users ?
+        </admin-modal>
         <div class="user-sort">
             <div class="user-sort__option">
                 <select name="role" class="user-sort__role" @change="onChange($event)">
@@ -22,10 +25,29 @@
         </div>
 
         <div class="user-table-wrapper">
-            <table class="user-table">
+            <table class="user-table" cellspacing="0" cellpadding="0">
                 <thead> 
+                    <tr v-if="checkedItemLength > 0">
+                        <th colspan="2">
+                            <div class="user-table__action">
+                                <div class="user-action__choosed">
+                                    {{ checkedItemLength }}/15 User Choosed
+                                </div>
+                                <button class="user-action__delete" @click="openBulkDeleteDialog">
+                                    Delete
+                                </button>
+                            </div>
+                        </th>
+                    </tr>
                     <tr>
-                        <th></th>
+                        <th>
+                            <input 
+                                type="checkbox" 
+                                class="user-table-check" 
+                                v-model="checkAll" 
+                                @change="bulkCheck"
+                            >
+                        </th>
                         <th>Name</th>
                         <th>Role</th>
                         <th>Date Created</th>
@@ -33,9 +55,18 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="data in userData" :key="data.id">
+                    <tr 
+                        v-for="(data, i) in userData" 
+                        :key="i" 
+                        :class="{row__checked: data.check}"
+                        class="user-table__row"
+                    >
                         <td>
-                            <input type="checkbox" name="usercheck" class="user-table-check">
+                            <input 
+                                type="checkbox" 
+                                class="user-table-check" 
+                                @change="rowCheck(i)"
+                                :checked="data.check">
                         </td>
                         <td>
                             <div class="user-table__name__email">
@@ -71,7 +102,7 @@
                                 </div>
                                 <div class="user-table__choose" v-show="activeOption === data.id">
                                     <div class="user-table__choose__item" @click="openDialog(data.id)">Delete</div>
-                                    <div class="user-table__choose__item">Edit</div>
+                                    <a href="#" class="user-table__choose__item">Edit</a>
                                 </div>
                             </div>
                         </td>
@@ -148,6 +179,9 @@
                 activeOption: null,
                 isSubmit: false,
                 pathRole: null,
+                bulkDelete: false,
+                checkAll: false,
+                checkedItem: [],
                 page: {
                     current_page: null,
                     last_page: null,
@@ -166,11 +200,40 @@
             openDialog(id) {
                 this.dialogId = id;
             },
+            openBulkDeleteDialog() {
+                this.bulkDelete = this.checkedItem;
+            },
             toggleOptions(id) {
                 this.activeOption ? this.activeOption = null : this.activeOption = id;
             },
             closeModal() {
                 this.dialogId = null;
+                this.bulkDelete = false;
+            },
+            bulkDeleteUser() {
+                this.bulkDelete = true;
+                this.isSubmit = true;
+                const route = `${process.env.MIX_SERVER_PORT_ADMIN}users/`;
+                axios.delete(route, {data: { user: this.checkedItem }})
+                    .then(response => {
+                        this.checkedItem.forEach(item => {
+                            const itemIndex = this.userData.findIndex(data => data.id === item);
+                            this.userData.splice(itemIndex, 1);
+                        })
+
+                        this.userData.forEach(data => {
+                            this.$set(data, 'check', false);
+                        })
+
+                        this.checkedItem = [];
+                    })
+                    .catch(error => {
+                        console.log(error);
+                    })
+                    .finally(() => {
+                        this.bulkDelete = false;
+                        this.isSubmit = false;
+                    })
             },
             deleteUser() {
                 const id = this.dialogId;
@@ -234,6 +297,40 @@
                 this.page.prev_page_url = this.users.prev_page_url;
                 this.page.next_page_url = this.users.next_page_url;
                 this.page.last_page_url = this.users.last_page_url;
+            },
+            rowCheck(index) {
+                const checkedItem = this.userData[index].check
+                const userId = this.userData[index].id;
+
+                // https://vuejs.org/v2/guide/reactivity.html#Change-Detection-Caveats
+                if (checkedItem) {
+                    this.$set(this.userData[index], 'check', false);
+                    const checkedIdIndex = this.checkedItem.findIndex(item => item === userId);
+                    this.checkedItem.splice(checkedIdIndex, 1);
+                } else {
+                    this.$set(this.userData[index], 'check', true);
+                    this.checkedItem.push(userId);
+                }
+            },
+            bulkCheck() {
+                if (!this.checkAll) {
+                    this.userData.forEach((data, i) => {
+                        this.$set(data, 'check', false);
+                    });
+                    this.checkedItem = [];
+                } else {
+                    this.userData.forEach((data, i) => {
+                        if (!data.check) {
+                            this.checkedItem.push(data.id);
+                        }
+                        this.$set(data, 'check', true);
+                    });
+                }
+            }
+        },
+        computed: {
+            checkedItemLength() {
+                return this.checkedItem.length;
             }
         },
         mounted() {
@@ -272,6 +369,10 @@
         font-weight: 300;
     }
 
+    .user-table__row {
+        margin-top: 10px;
+    }
+
     .user-sort--bold {
         font-weight: 600;
     }
@@ -297,6 +398,27 @@
         width: 100%;
         empty-cells: show;
         box-sizing: border-box;
+        border-collapse:separate;
+        border-spacing:0 10px;
+    }
+
+    .user-table__action {
+        display: flex;
+        align-items: center;
+    }
+
+    .user-action__choosed {
+        font-weight: 400;
+    }
+
+    .user-action__delete {
+        background: #ff4a4a;
+        padding: 7px 12px;
+        color: #fff;
+        border: 0;
+        border-radius: 6px;
+        margin-left: 20px;
+        cursor: pointer;
     }
 
     .user-table-body {
@@ -311,6 +433,10 @@
     th, td {
         padding: 10px;
         text-align: left;
+    }
+
+    .row__checked {
+        background: #bfccf2;
     }
 
     .user-table__name__email {
@@ -364,6 +490,8 @@
 
     .user-table__choose__item {
         cursor: pointer;
+        color: #000;
+        text-decoration: none;
     }
 
     .user-table__choose__item + .user-table__choose__item {
@@ -442,7 +570,7 @@
     }
 
     .user__paging_active {
-        padding: 2px 6px;
+        padding: 2px 7px;
         border: 1px solid #4A74FF;
         border-radius: 4px;
     }
