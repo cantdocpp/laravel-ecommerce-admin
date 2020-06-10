@@ -6,7 +6,7 @@
 
 @section('content')
     <div class="user-create">
-        <a href="{{ route('admin.users') }}" class="user-create-back">
+        <a href="{{ route('admin.users.show', $user->id) }}" class="user-create-back">
             Get Back
         </a>
         <h1 class="user-create-header">

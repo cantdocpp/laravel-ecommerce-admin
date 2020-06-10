@@ -6,6 +6,9 @@
 
 @section('content')
     <div class="single-user">
+        <a href="{{ route('admin.users') }}" class="user-create-back">
+            Get Back
+        </a>
         <div class="single-user__content">
             <div class="single-user__block">
                 <div class="single-user__label">
