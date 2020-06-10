@@ -121,10 +121,10 @@
                         {{ page.last_page }}
                     </a> -->
                 </div>
-                <a :href="page.next_page_url" class="user-table__paging__next">
+                <a :href="page.next_page_url" class="user-table__paging__next"  v-if="page.current_page !== page.last_page">
                     <div class="user-table__paging__arrow user-table__paging__arrow--next"></div>
                 </a>
-                <a :href="page.last_page_url" class="user-table__paging__last">
+                <a :href="page.last_page_url" class="user-table__paging__last" v-if="page.current_page !== page.last_page">
                     <div class="user-table__paging__arrow user-table__paging__arrow--next user-table__paging__arrow--end"></div>
                     <div class="user-table__paging__arrow user-table__paging__arrow--next"></div>
                 </a>

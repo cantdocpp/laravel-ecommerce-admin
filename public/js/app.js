@@ -38833,38 +38833,42 @@ var render = function() {
               : _vm._e()
           ]),
           _vm._v(" "),
-          _c(
-            "a",
-            {
-              staticClass: "user-table__paging__next",
-              attrs: { href: _vm.page.next_page_url }
-            },
-            [
-              _c("div", {
-                staticClass:
-                  "user-table__paging__arrow user-table__paging__arrow--next"
-              })
-            ]
-          ),
+          _vm.page.current_page !== _vm.page.last_page
+            ? _c(
+                "a",
+                {
+                  staticClass: "user-table__paging__next",
+                  attrs: { href: _vm.page.next_page_url }
+                },
+                [
+                  _c("div", {
+                    staticClass:
+                      "user-table__paging__arrow user-table__paging__arrow--next"
+                  })
+                ]
+              )
+            : _vm._e(),
           _vm._v(" "),
-          _c(
-            "a",
-            {
-              staticClass: "user-table__paging__last",
-              attrs: { href: _vm.page.last_page_url }
-            },
-            [
-              _c("div", {
-                staticClass:
-                  "user-table__paging__arrow user-table__paging__arrow--next user-table__paging__arrow--end"
-              }),
-              _vm._v(" "),
-              _c("div", {
-                staticClass:
-                  "user-table__paging__arrow user-table__paging__arrow--next"
-              })
-            ]
-          )
+          _vm.page.current_page !== _vm.page.last_page
+            ? _c(
+                "a",
+                {
+                  staticClass: "user-table__paging__last",
+                  attrs: { href: _vm.page.last_page_url }
+                },
+                [
+                  _c("div", {
+                    staticClass:
+                      "user-table__paging__arrow user-table__paging__arrow--next user-table__paging__arrow--end"
+                  }),
+                  _vm._v(" "),
+                  _c("div", {
+                    staticClass:
+                      "user-table__paging__arrow user-table__paging__arrow--next"
+                  })
+                ]
+              )
+            : _vm._e()
         ])
       ])
     ],
