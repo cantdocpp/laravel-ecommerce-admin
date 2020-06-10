@@ -23,7 +23,7 @@ class UserController extends Controller
     }
 
     public function create() {
-        return view('admin.users.userCreate');
+        return view('admin.users.create');
     }
 
     public function store(Request $request) {
@@ -78,5 +78,35 @@ class UserController extends Controller
         return view('admin.users.single', [
             'user' => $user
         ]);
+    }
+
+    public function edit(User $user) {
+        return view('admin.users.edit', [
+            'user' => $user
+        ]);
+    }
+
+    public function update(Request $request, User $user) {
+        $validateData = Validator::make($request->all(), [
+            'name' => 'required',
+            'email' => 'required|email',
+            'phone' => 'required|numeric',
+            'role' => 'required'
+        ]);
+
+        if ($validateData->fails()) {
+            return redirect()
+                    ->back()
+                    ->withErrors($validateData)
+                    ->withInput();
+        }
+
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->phone = $request->phone;
+        $user->role = $request->role;
+        $user->save();
+
+        return redirect(route('admin.users.show', $user->id));
     }
 }

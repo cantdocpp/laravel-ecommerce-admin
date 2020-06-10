@@ -70,7 +70,7 @@
                         </td>
                         <td>
                             <div class="user-table__name__email">
-                                <div class="user-table__name"> {{ data.name }} </div>
+                                <a :href="`${data.id}`" class="user-table__name"> {{ data.name }} </a>
                                 <div class="user-table__email"> {{ data.email }} </div>
                             </div>
                         </td>
@@ -102,7 +102,7 @@
                                 </div>
                                 <div class="user-table__choose" v-show="activeOption === data.id">
                                     <div class="user-table__choose__item" @click="openDialog(data.id)">Delete</div>
-                                    <a :href="`users/${data.id}`" class="user-table__choose__item">Edit</a>
+                                    <a :href="`${data.id}/edit`" class="user-table__choose__item">Edit</a>
                                 </div>
                             </div>
                         </td>
@@ -446,6 +446,12 @@
 
     .user-table__name {
         font-weight: 600;
+        color: #000;
+        text-decoration: none;
+    }
+
+    .user-table__name:hover {
+        text-decoration: underline;
     }
 
     .user-table__email {
