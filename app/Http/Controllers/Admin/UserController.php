@@ -109,4 +109,11 @@ class UserController extends Controller
 
         return redirect(route('admin.users.show', $user->id));
     }
+
+    public function search(Request $request) {
+        $search = $request->query('search');
+        $searchResult = User::where('name', 'like', '%' . $search . '%')->get();
+        
+        return $searchResult;
+    }
 }

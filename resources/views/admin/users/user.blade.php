@@ -9,9 +9,7 @@
         <h1 class="user__header">User List</h1>
 
         <div class="user__add__search">
-            <div class="user__search">
-                <input type="text" class="user__search__input" placeholder="Search user by name">
-            </div>
+            <user-search></user-search>
             <a href="{{ route('admin.users.create') }}" class="user__add__link">
                 Add User
             </a>

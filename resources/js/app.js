@@ -22,6 +22,7 @@ window.Vue = require('vue');
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('admin-modal', require('./admin/components/AppModal').default);
 Vue.component('user-table', require('./admin/pages/user/AppUserTable').default);
+Vue.component('user-search', require('./admin/pages/user/AppUserSearch').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to
