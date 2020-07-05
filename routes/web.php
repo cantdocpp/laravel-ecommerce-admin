@@ -32,6 +32,9 @@ Route::get('/admin/users/{user}', 'Admin\UserController@show')->name('admin.user
 Route::get('/admin/users/{user}/edit', 'Admin\UserController@edit')->name('admin.users.edit');
 Route::put('/admin/users/{user}', 'Admin\UserController@update')->name('admin.users.update');
 
+Route::get('/admin/products', 'Admin\ProductController@index')->name('admin.products');
+Route::get('/admin/products/create', 'Admin\ProductController@create')->name('admin.products.create');
+
 // API routes
 Route::prefix('api')->group(function () {
     Route::get('admin/users', 'Admin\UserController@getUserTableData')->middleware('cors');

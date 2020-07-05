@@ -13,7 +13,7 @@
             <a href="/admin/users" class="sidebar__link">Users</a>
         </div>
         <div class="sidebar__item">
-            <a href="#" class="sidebar__link">Products</a>
+            <a href="/admin/products" class="sidebar__link">Products</a>
         </div>
         <div class="sidebar__item">
             <a href="#" class="sidebar__link">Customers</a>

@@ -23,6 +23,9 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 Vue.component('admin-modal', require('./admin/components/AppModal').default);
 Vue.component('user-table', require('./admin/pages/user/AppUserTable').default);
 Vue.component('user-search', require('./admin/pages/user/AppUserSearch').default);
+Vue.component('product-upload', require('./admin/pages/product/AppProductUpload').default);
+Vue.component('product-header', require('./admin/pages/product/AppProductTableHeader').default);
+Vue.component('product-handle', require('./admin/pages/product/AppProductUploadHandle').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

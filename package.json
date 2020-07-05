@@ -25,6 +25,7 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
-        "vue-click-outside": "^1.1.0"
+        "vue-click-outside": "^1.1.0",
+        "vuedraggable": "^2.23.2"
     }
 }
