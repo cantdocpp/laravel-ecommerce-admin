@@ -41,4 +41,5 @@ Route::prefix('api')->group(function () {
     Route::delete('/admin/users/{user}', 'Admin\UserController@destroy')->name('admin.users.destroy');
     Route::delete('/admin/users/', 'Admin\UserController@bulkDestroy')->name('admin.users.bulk.destroy');
     Route::get('/admin/users/search', 'Admin\UserController@search')->name('admin.users.search');
+    Route::post('/admin/product', 'Admin\ProductController@store')->name('admin.product.store');
 });

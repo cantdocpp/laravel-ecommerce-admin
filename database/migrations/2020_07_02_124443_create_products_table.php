@@ -17,9 +17,17 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->foreignId('category_id')->references('id')->on('categories');
             $table->string('name');
+            $table->string('image');
             $table->mediumText('description');
-            $table->string('video_url');
+            $table->boolean('visibility')->default('1');
             $table->bigInteger('price');
+            $table->bigInteger('stock');
+            $table->string('sku')->nullable();
+            $table->integer('weight');
+            $table->integer('long');
+            $table->integer('width');
+            $table->integer('height');
+            $table->string('video_url')->nullable();
             $table->timestamps();
         });
     }

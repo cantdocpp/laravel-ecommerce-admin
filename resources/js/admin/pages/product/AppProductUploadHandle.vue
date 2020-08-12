@@ -2,14 +2,14 @@
     <div class="product-create__upload">
         <div class="product-create__upload__main">
             <div class="product-create__upload__area product-create__upload__area--main">
-                <div class="product-create__upload__delete" v-if="mainImage.length > 0" @click="deleteMainImage">x</div>
+                <div class="product-create__upload__delete" v-if="mainImage.url.length > 0" @click="deleteMainImage">x</div>
                 <img
-                    v-if="mainImage.length > 0"
-                    :src="mainImage"
+                    v-if="mainImage.url.length > 0"
+                    :src="mainImage.url"
                     class="product-create__upload__image product-create__upload__image--main"
                     ref="main"
                 />
-                <span class="product-create__upload__plus" v-if="mainImage.length === 0">+</span>
+                <span class="product-create__upload__plus" v-if="mainImage.url.length === 0">+</span>
                 <input
                     accept="image/x-png,image/png,image/jpg,image/jpeg" 
                     type="file" 
@@ -17,7 +17,7 @@
                     class="product-create__upload__input" 
                     @click="checkInputIndex($event, 0)"
                     @change="mainFileChange($event.target.files, 0)"
-                    v-if="mainImage.length === 0"
+                    v-if="mainImage.url.length === 0"
                 >
             </div>
         </div>
@@ -55,38 +55,49 @@ export default {
             uploadedImage: [
                 {
                     url: '',
+                    file: '',
                     index: 1
                 },
                 {
                     url: '',
+                    file: '',
                     index: 2
                 },
                 {
                     url: '',
+                    file: '',
                     index: 3
                 },
                 {
                     url: '',
+                    file: '',
                     index: 4
                 },
                 {
                     url: '',
+                    file: '',
                     index: 5
                 },
                 {
                     url: '',
+                    file: '',
                     index: 6
                 },
                 {
                     url: '',
+                    file: '',
                     index: 7
                 },
                 {
                     url: '',
+                    file: '',
                     index: 8
                 }
             ],
-            mainImage: '',
+            mainImage: {
+                url: '', 
+                file: ''
+            },
         }
     },
     methods: {
@@ -121,6 +132,8 @@ export default {
             reader.onload = e => {
                 const url = e.target.result;
                 this.uploadedImage[index].url = url;
+                this.uploadedImage[index].file = file;
+                
                 return url;
             };
             reader.readAsDataURL(file);
@@ -129,13 +142,14 @@ export default {
             const reader = new FileReader();
             reader.onload = e => {
                 const url = e.target.result;
-                this.mainImage = url;
+                this.mainImage.url = url;
+                this.mainImage.file = file;
                 this.$emit('main-image', this.mainImage);
             };
             reader.readAsDataURL(file);
         },
         deleteMainImage() {
-            this.mainImage = '';
+            this.mainImage.url = '';
             this.$emit('main-image', this.mainImage);
         },
         deleteOtherImage(index) {
@@ -170,12 +184,17 @@ export default {
         border-radius: 5px;
     }
 
+    .product-create__upload__main {
+        width: 40%;
+    }
+
     .product-create__upload__area {
         width: 120px;
         height: 120px;
         border: 2px dashed #6B8EFC;
         border-radius: 4px;
         position: relative;
+        width: 100%;
     }
 
     .product-create__upload__area--main {
@@ -188,6 +207,7 @@ export default {
         grid-template-columns: repeat(4, 1fr);
         grid-gap: 5px 10px;
         margin-left: 10px;
+        width: 100%;
     }
 
     .product-create__upload__input {

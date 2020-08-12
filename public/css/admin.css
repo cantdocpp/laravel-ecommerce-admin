@@ -93,6 +93,12 @@
   min-height: 100vh;
 }
 
+.admin-page {
+  max-width: 1440px;
+  min-width: 1200px;
+  margin: 0 auto;
+}
+
 .user__header {
   font-size: 30px;
 }
